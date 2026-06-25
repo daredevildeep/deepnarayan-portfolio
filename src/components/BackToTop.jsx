@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
+import { prefersReducedMotion } from '../lib/utils'
 
 /**
  * Fixed bottom-right "back to top" control. Fades in after 400px of scroll and
@@ -20,8 +21,16 @@ export default function BackToTop() {
   }, [])
 
   const toTop = () => {
-    if (window.__lenis) window.__lenis.scrollTo(0)
-    else window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Lenis is disabled under reduced motion, so the native branch must not
+    // force a smooth animation (explicit behavior overrides the CSS rule).
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0)
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      })
+    }
   }
 
   return (

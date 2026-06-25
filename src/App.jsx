@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion'
 import { useLenis } from './hooks/useLenis'
 import Nav from './components/Nav/Nav'
 import Hero from './components/Hero/Hero'
@@ -16,7 +17,9 @@ export default function App() {
   useLenis()
 
   return (
-    <>
+    // reducedMotion="user" makes every Framer Motion animation in the tree
+    // honor prefers-reduced-motion (disables transforms, keeps opacity).
+    <MotionConfig reducedMotion="user">
       {/* Ambient overlays (Part 6.1) */}
       <div className="fx-grid" aria-hidden="true" />
       <div className="fx-vignette" aria-hidden="true" />
@@ -37,6 +40,6 @@ export default function App() {
 
       <Footer />
       <BackToTop />
-    </>
+    </MotionConfig>
   )
 }
