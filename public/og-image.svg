@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050810"/>
+      <stop offset="1" stop-color="#0D1526"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E2E8F0"/>
+      <stop offset="0.6" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#1D6FA4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- grid -->
+  <g stroke="rgba(56,189,248,0.10)" stroke-width="1">
+    <path d="M0 90 H1200 M0 180 H1200 M0 270 H1200 M0 360 H1200 M0 450 H1200 M0 540 H1200"/>
+    <path d="M120 0 V630 M240 0 V630 M360 0 V630 M480 0 V630 M600 0 V630 M720 0 V630 M840 0 V630 M960 0 V630 M1080 0 V630"/>
+  </g>
+  <!-- status -->
+  <g transform="translate(80,110)">
+    <circle cx="8" cy="-4" r="7" fill="#10B981"/>
+    <text x="26" y="2" font-family="monospace" font-size="22" letter-spacing="4" fill="#10B981">AVAILABLE FOR CONTRACT</text>
+  </g>
+  <text x="78" y="280" font-family="'Space Grotesk', sans-serif" font-size="92" font-weight="800" letter-spacing="-2" fill="#E2E8F0">DEEP NARAYAN</text>
+  <text x="78" y="380" font-family="'Space Grotesk', sans-serif" font-size="92" font-weight="800" letter-spacing="-2" fill="url(#accent)">YADAV</text>
+  <text x="80" y="470" font-family="monospace" font-size="30" fill="#38BDF8">&gt;_ AI Gameplay Data Annotator</text>
+  <text x="80" y="520" font-family="monospace" font-size="22" fill="#94A3B8">RTX capture rig · 1080p / 60fps · Structured labeling · Remote</text>
+  <!-- annotation box motif -->
+  <g transform="translate(880,470)">
+    <rect x="0" y="0" width="240" height="120" fill="none" stroke="#F59E0B" stroke-width="2.5"/>
+    <rect x="0" y="-26" width="120" height="22" fill="#F59E0B"/>
+    <text x="9" y="-9" font-family="monospace" font-size="16" fill="#050810">ENEMY_NPC</text>
+  </g>
+</svg>
