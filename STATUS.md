@@ -1,9 +1,26 @@
 # PROJECT STATUS
 Last updated: 2026-06-25
-Current phase: 10 of 10 — COMPLETE
+Current phase: 10 of 10 — COMPLETE + improvement pass complete
 Last commit: see `git log --oneline`
 Next step: Push to GitHub and deploy on Netlify (see DEPLOY.md). Then swap the
 OG image for a PNG and drop in the real resume PDF + sample clips.
+
+## Improvement Pass (2026-06-25)
+Performance + AI readability + sample section + new UX features.
+- PASS A — Perf: gsap.ticker drives Lenis (single RAF) + ScrollTrigger sync,
+  wheelMultiplier 0.8; Canvas frameloop="demand" + dpr[1,1.5] + performance min;
+  FrameDriver invalidates only while hero in view (IntersectionObserver) so the
+  GPU idles below the fold; mobile (<768px) renders a static SVG (no Three.js).
+- PASS B — AI/ATS: exact recruiter meta + keywords; JSON-LD Person schema;
+  sr-only plaintext bio in static HTML; aria-label on every section; ids aligned
+  to top/setup/games/workflow/experience/samples/contact; authoritative sr-only H1.
+- PASS C — Samples: on-request cards (game/task/duration/status + "Request This
+  Sample" mailto); "CAPTURE RIG — READY" HUD panel; 24h delivery note.
+- PASS D — UX: 2px progress bar; live IST clock; email+phone clipboard copy;
+  back-to-top; "What I Annotate" table; dated availability badge.
+- Verified by an adversarial multi-lens review workflow (react/perf/ATS/a11y/spec).
+  Two low-severity reduced-motion gaps in BackToTop were found and fixed; the
+  whole app is now wrapped in <MotionConfig reducedMotion="user">.
 
 ## Completed Phases
 - [x] Phase 0 — Scaffold + all dependencies
