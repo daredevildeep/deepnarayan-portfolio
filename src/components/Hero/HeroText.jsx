@@ -82,14 +82,19 @@ export default function HeroText() {
         </span>
       </motion.div>
 
-      {/* Name */}
-      <h1 className="font-display text-5xl font-extrabold uppercase leading-[0.95] tracking-tightest text-text-primary sm:text-6xl md:text-7xl">
+      {/* Visible name — decorative per-letter animation. The accessible H1 lives
+          in Hero.jsx (sr-only), so this is aria-hidden to avoid a duplicate
+          heading and garbled per-span text for scrapers/AT (B5). */}
+      <div
+        aria-hidden="true"
+        className="font-display text-5xl font-extrabold uppercase leading-[0.95] tracking-tightest text-text-primary sm:text-6xl md:text-7xl"
+      >
         <AnimatedWord text="Deep Narayan" />
         <br />
         <span className="text-gradient">
           <AnimatedWord text="Yadav" />
         </span>
-      </h1>
+      </div>
 
       {/* Typed role */}
       <p className="mt-6 font-mono text-base text-accent-glow sm:text-lg">
@@ -114,7 +119,7 @@ export default function HeroText() {
         className="mt-9 flex flex-wrap items-center gap-4"
       >
         <button
-          onClick={() => scrollToId('work')}
+          onClick={() => scrollToId('samples')}
           className="group inline-flex items-center gap-2 rounded bg-accent-core px-6 py-3 font-mono text-sm uppercase tracking-widest text-white shadow-glow transition-colors hover:bg-accent-glow hover:text-void"
         >
           View My Work

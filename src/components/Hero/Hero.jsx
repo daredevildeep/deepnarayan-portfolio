@@ -39,7 +39,8 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      id="hero"
+      id="top"
+      aria-label="Introduction — Deep Narayan Yadav AI Gameplay Annotator"
       className="relative flex min-h-[100svh] items-center overflow-hidden"
     >
       {/* Authoritative, scraper-friendly heading (visually hidden). The visible

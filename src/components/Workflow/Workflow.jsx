@@ -80,7 +80,13 @@ export default function Workflow() {
   }, [])
 
   return (
-    <Section id="workflow" index="03" eyebrow="Process" title="How I Annotate">
+    <Section
+      id="workflow"
+      ariaLabel="Annotation workflow process"
+      index="03"
+      eyebrow="Process"
+      title="How I Annotate"
+    >
       <p className="mb-14 max-w-2xl text-text-data">
         No annotation guesswork — a repeatable, four-stage pipeline that maps the
         actual job from brief to delivery. Precision and instruction-adherence at

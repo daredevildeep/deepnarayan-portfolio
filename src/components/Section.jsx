@@ -6,6 +6,7 @@ import { cn } from '../lib/utils'
  */
 export default function Section({
   id,
+  ariaLabel,
   eyebrow,
   title,
   index,
@@ -14,7 +15,11 @@ export default function Section({
   headerClassName,
 }) {
   return (
-    <section id={id} className={cn('section-pad relative', className)}>
+    <section
+      id={id}
+      aria-label={ariaLabel}
+      className={cn('section-pad relative', className)}
+    >
       <div className="container-content">
         {(eyebrow || title) && (
           <header className={cn('mb-10 md:mb-16', headerClassName)}>

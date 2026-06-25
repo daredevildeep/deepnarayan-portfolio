@@ -18,7 +18,13 @@ export default function Contact() {
   }
 
   return (
-    <Section id="contact" index="06" eyebrow="Contact" title="Ready to Annotate">
+    <Section
+      id="contact"
+      ariaLabel="Contact Deep Narayan Yadav"
+      index="06"
+      eyebrow="Contact"
+      title="Ready to Annotate"
+    >
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <p className="max-w-xl text-lg text-text-data">

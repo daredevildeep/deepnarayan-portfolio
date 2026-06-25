@@ -66,7 +66,13 @@ export default function Setup() {
   const ref = useReveal({ stagger: 0.06 })
 
   return (
-    <Section id="setup" index="01" eyebrow="Operator Setup" title="Hardware Readiness">
+    <Section
+      id="setup"
+      ariaLabel="Hardware and recording setup"
+      index="01"
+      eyebrow="Operator Setup"
+      title="Hardware Readiness"
+    >
       <p className="mb-10 max-w-2xl text-text-data">
         A capture-ready workstation built for high-FPS recording and clean
         delivery. Every value below is live telemetry from the rig used for

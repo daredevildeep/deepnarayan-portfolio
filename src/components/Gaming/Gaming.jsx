@@ -98,7 +98,13 @@ export default function Gaming() {
   const [open, setOpen] = useState(null)
 
   return (
-    <Section id="gaming" index="02" eyebrow="Game Library" title="Annotation Depth">
+    <Section
+      id="games"
+      ariaLabel="Gaming experience and annotation relevance"
+      index="02"
+      eyebrow="Game Library"
+      title="Annotation Depth"
+    >
       <p className="mb-10 max-w-2xl text-text-data">
         Breadth across genres means familiarity with diverse game states,
         mechanics, and UIs — the context that makes labeling fast and accurate.

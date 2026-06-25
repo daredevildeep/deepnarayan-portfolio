@@ -107,7 +107,13 @@ export default function SampleWork() {
   const [active, setActive] = useState(null)
 
   return (
-    <Section id="work" index="05" eyebrow="Sample Work" title="Capture Reels">
+    <Section
+      id="samples"
+      ariaLabel="Sample work and recordings"
+      index="05"
+      eyebrow="Sample Work"
+      title="Capture Reels"
+    >
       <p className="mb-10 max-w-2xl text-text-data">
         Representative session types. Live placeholders today — real recordings
         attach here as they're produced. Each ships at 1080p / 60fps with session

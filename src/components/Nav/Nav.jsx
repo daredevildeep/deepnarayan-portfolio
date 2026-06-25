@@ -32,7 +32,7 @@ export default function Nav() {
       <nav className="container-content flex h-16 items-center justify-between">
         {/* Brand */}
         <button
-          onClick={() => handleNav('hero')}
+          onClick={() => handleNav('top')}
           className="group flex items-center gap-2 font-display text-sm font-bold uppercase tracking-tightest"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-accent-green animate-pulse-dot" />

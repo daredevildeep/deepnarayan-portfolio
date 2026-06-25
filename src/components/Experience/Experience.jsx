@@ -61,7 +61,13 @@ export default function Experience() {
   }, [])
 
   return (
-    <Section id="experience" index="04" eyebrow="Track Record" title="Experience">
+    <Section
+      id="experience"
+      ariaLabel="Professional experience"
+      index="04"
+      eyebrow="Track Record"
+      title="Experience"
+    >
       <p className="mb-12 max-w-2xl text-text-data">
         Five roles built on reliability, instruction-following, and detail —
         the same disciplines that make annotation work trustworthy.

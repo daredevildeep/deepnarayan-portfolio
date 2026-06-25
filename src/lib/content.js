@@ -176,11 +176,11 @@ export const SAMPLES = [
 
 // Nav sections (Part 8, Phase 2).
 export const SECTIONS = [
-  { id: 'hero', label: 'Top' },
+  { id: 'top', label: 'Top' },
   { id: 'setup', label: 'Setup' },
-  { id: 'gaming', label: 'Games' },
+  { id: 'games', label: 'Games' },
   { id: 'workflow', label: 'Workflow' },
   { id: 'experience', label: 'Experience' },
-  { id: 'work', label: 'Samples' },
+  { id: 'samples', label: 'Samples' },
   { id: 'contact', label: 'Contact' },
 ]
