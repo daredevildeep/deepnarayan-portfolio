@@ -79,7 +79,7 @@ export default function Nav() {
           </a>
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden"
+            className="-mr-2 grid h-11 w-11 place-items-center text-text-data md:hidden"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}

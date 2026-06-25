@@ -41,7 +41,7 @@ function Lightbox({ sample, onClose }) {
       >
         <button
           onClick={onClose}
-          className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full border border-[var(--border-dim)] bg-void/70 text-text-data hover:text-accent-glow"
+          className="absolute right-3 top-3 z-10 grid h-11 w-11 place-items-center rounded-full border border-[var(--border-dim)] bg-void/70 text-text-data hover:text-accent-glow"
           aria-label="Close"
         >
           <X size={18} />

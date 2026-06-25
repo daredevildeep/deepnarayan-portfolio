@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local working screenshots / scratch (not part of the deployable site)
+RESULT/

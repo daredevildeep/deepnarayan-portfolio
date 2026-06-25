@@ -60,7 +60,7 @@ export default function Contact() {
               <button
                 onClick={() => copy(PERSONAL.email, 'email')}
                 data-cursor="hover"
-                className="grid h-9 w-9 shrink-0 place-items-center rounded border border-[var(--border-dim)] text-text-muted transition-colors hover:border-[var(--border-glow)] hover:text-accent-glow"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded border border-[var(--border-dim)] text-text-muted transition-colors hover:border-[var(--border-glow)] hover:text-accent-glow sm:h-9 sm:w-9"
                 aria-label="Copy email"
               >
                 {copiedKey === 'email' ? (
@@ -85,7 +85,7 @@ export default function Contact() {
               <button
                 onClick={() => copy(PERSONAL.phone, 'phone')}
                 data-cursor="hover"
-                className="grid h-9 w-9 shrink-0 place-items-center rounded border border-[var(--border-dim)] text-text-muted transition-colors hover:border-[var(--border-glow)] hover:text-accent-glow"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded border border-[var(--border-dim)] text-text-muted transition-colors hover:border-[var(--border-glow)] hover:text-accent-glow sm:h-9 sm:w-9"
                 aria-label="Copy phone number"
               >
                 {copiedKey === 'phone' ? (
