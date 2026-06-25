@@ -1,0 +1,12 @@
+# Normalize text to LF in the repo; let working tree use platform endings.
+* text=auto eol=lf
+
+# Binary assets — never apply line-ending conversion (would corrupt them).
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
