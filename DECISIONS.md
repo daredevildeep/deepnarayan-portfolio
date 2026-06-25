@@ -1,5 +1,18 @@
 # DECISIONS.md — Decision Log (append-only)
 
+2026-06-25 — Hero scene → "Live Annotation Feed"; scroll without drei ScrollControls:
+Reason: Replaced the floating-monitor scene with a procedural annotation-session
+scene (floor grid + fog + emissive game-world boxes + cyan wireframe annotation
+boxes with drei <Html> labels + sweeping scan line + HTML HUD). The brief asked
+for drei `useScroll`, but that requires <ScrollControls>, which creates its own
+scroll container and hijacks the wheel over the canvas — incompatible with the
+site's full-page Lenis smooth scroll (the hero is one section in a longer page).
+Instead the scroll interaction (camera z 8→3, extra boxes, faster scan) is driven
+by the hero section's page-scroll progress via a ref read in useFrame — same
+effect, no scroll hijack. Bloom/post-processing removed entirely (it caused
+flashing); glow now comes from emissive materials. @react-three/postprocessing
+is left installed but unused.
+
 2026-06-25 — Manual Vite scaffold instead of `npm create vite`:
 Reason: The project folder already contained CLAUDE.md, which makes the
 interactive scaffolder prompt ("directory not empty — remove files?"). Writing

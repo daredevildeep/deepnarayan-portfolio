@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import HeroText from './HeroText'
 import HeroStatic from './HeroStatic'
+import HeroHud from './HeroHud'
 
 // Lazy-load the WebGL scene so first paint isn't blocked by Three.js (Part 10).
 // On mobile we never import it at all (A7).
@@ -11,6 +12,12 @@ const DESKTOP_QUERY = '(min-width: 768px)'
 
 export default function Hero() {
   const sectionRef = useRef(null)
+  // 0 at hero top, 1 once scrolled one viewport down. Drives the in-canvas
+  // camera push / scan speed / extra-box reveal without drei ScrollControls
+  // (which would hijack the page's Lenis scroll). Read in useFrame via ref.
+  const scrollRef = useRef(0)
+  // Shared channel for the in-canvas FPS meter -> HTML HUD.
+  const hudRef = useRef({ fps: 0 })
   const [isDesktop, setIsDesktop] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(DESKTOP_QUERY).matches
   )
@@ -36,6 +43,21 @@ export default function Hero() {
     return () => io.disconnect()
   }, [])
 
+  // Track scroll progress through the hero (0 -> 1) for the scene interaction.
+  useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current
+      if (!el) return
+      const top = el.getBoundingClientRect().top
+      const denom = el.offsetHeight - window.innerHeight
+      const p = -top / (denom > 0 ? denom : window.innerHeight)
+      scrollRef.current = Math.min(1, Math.max(0, p))
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <section
       ref={sectionRef}
@@ -57,17 +79,20 @@ export default function Hero() {
             fallback={
               <div className="grid h-full w-full place-items-center bg-void">
                 <span className="font-mono text-xs uppercase tracking-widest text-text-muted">
-                  Initializing canvas…
+                  Initializing feed…
                 </span>
               </div>
             }
           >
-            <HeroScene active={inView} />
+            <HeroScene active={inView} scrollRef={scrollRef} hudRef={hudRef} />
           </Suspense>
         ) : (
           <HeroStatic />
         )}
       </div>
+
+      {/* Live-session HUD over the canvas (desktop only) */}
+      {isDesktop && <HeroHud hudRef={hudRef} />}
 
       {/* Left-side gradient so text stays legible over the scene */}
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-void via-void/80 to-transparent" />
