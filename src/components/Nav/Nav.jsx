@@ -88,7 +88,7 @@ export default function Nav() {
       </nav>
 
       {/* Scroll progress bar */}
-      <div className="relative h-px w-full bg-[var(--border-dim)]">
+      <div className="relative h-0.5 w-full bg-[var(--border-dim)]">
         <div
           className="absolute inset-y-0 left-0 bg-gradient-to-r from-accent-core to-accent-glow shadow-glow"
           style={{ width: `${progress * 100}%` }}

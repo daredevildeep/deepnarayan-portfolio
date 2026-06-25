@@ -1,21 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Copy, Check, Mail, Linkedin, Github, MapPin } from 'lucide-react'
+import { Copy, Check, Mail, Phone, Linkedin, Github, MapPin, Clock } from 'lucide-react'
 import { PERSONAL } from '../../lib/content'
 import Section from '../Section'
 
-export default function Contact() {
-  const [copied, setCopied] = useState(false)
+const IST_FORMAT = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Kolkata',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true,
+})
 
-  const copyEmail = async () => {
+export default function Contact() {
+  // Track which field was last copied so its icon flips to a check (D3).
+  const [copiedKey, setCopiedKey] = useState(null)
+  const [istTime, setIstTime] = useState(() => IST_FORMAT.format(new Date()))
+
+  const copy = async (value, key) => {
     try {
-      await navigator.clipboard.writeText(PERSONAL.email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1800)
+      await navigator.clipboard.writeText(value)
+      setCopiedKey(key)
+      setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1500)
     } catch {
-      // Clipboard unavailable — no-op, mailto still works.
+      // Clipboard unavailable — no-op, the mailto/tel link still works.
     }
   }
+
+  // Live IST clock for US recruiters (D2).
+  useEffect(() => {
+    const id = setInterval(() => setIstTime(IST_FORMAT.format(new Date())), 1000)
+    return () => clearInterval(id)
+  }, [])
 
   return (
     <Section
@@ -43,12 +58,41 @@ export default function Contact() {
                 {PERSONAL.email}
               </a>
               <button
-                onClick={copyEmail}
+                onClick={() => copy(PERSONAL.email, 'email')}
                 data-cursor="hover"
                 className="grid h-9 w-9 shrink-0 place-items-center rounded border border-[var(--border-dim)] text-text-muted transition-colors hover:border-[var(--border-glow)] hover:text-accent-glow"
                 aria-label="Copy email"
               >
-                {copied ? <Check size={16} className="text-accent-green" /> : <Copy size={16} />}
+                {copiedKey === 'email' ? (
+                  <Check size={16} className="text-accent-green" />
+                ) : (
+                  <Copy size={16} />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Phone block */}
+          <div className="mt-5">
+            <span className="data-label">Phone</span>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <a
+                href={`tel:${PERSONAL.phone.replace(/\s+/g, '')}`}
+                className="font-mono text-lg text-text-primary transition-colors hover:text-accent-glow"
+              >
+                {PERSONAL.phone}
+              </a>
+              <button
+                onClick={() => copy(PERSONAL.phone, 'phone')}
+                data-cursor="hover"
+                className="grid h-9 w-9 shrink-0 place-items-center rounded border border-[var(--border-dim)] text-text-muted transition-colors hover:border-[var(--border-glow)] hover:text-accent-glow"
+                aria-label="Copy phone number"
+              >
+                {copiedKey === 'phone' ? (
+                  <Check size={16} className="text-accent-green" />
+                ) : (
+                  <Copy size={16} />
+                )}
               </button>
             </div>
           </div>
@@ -100,9 +144,18 @@ export default function Contact() {
             </a>
           </div>
 
-          <div className="mt-5 flex items-center gap-2 border-t border-[var(--border-dim)] pt-5 text-sm text-text-muted">
-            <MapPin size={15} className="text-accent-gold" />
-            India (IST, UTC+5:30) — Flexible hours
+          <div className="mt-5 space-y-2 border-t border-[var(--border-dim)] pt-5">
+            <div className="flex items-center gap-2 text-sm text-text-muted">
+              <MapPin size={15} className="text-accent-gold" />
+              India (IST, UTC+5:30) — Flexible hours
+            </div>
+            <div className="flex items-center gap-2 text-sm text-text-data">
+              <Clock size={15} className="text-accent-glow" />
+              Current time in India:{' '}
+              <span className="font-mono text-text-primary" aria-live="off">
+                {istTime} IST
+              </span>
+            </div>
           </div>
         </div>
       </div>

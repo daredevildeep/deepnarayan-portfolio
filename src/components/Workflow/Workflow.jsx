@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { FileText, Circle, Tag, Upload, Check } from 'lucide-react'
-import { WORKFLOW, QUALITY_COMMITMENTS } from '../../lib/content'
+import { WORKFLOW, QUALITY_COMMITMENTS, ANNOTATION_TABLE } from '../../lib/content'
 import { prefersReducedMotion } from '../../lib/utils'
 import Section from '../Section'
 
@@ -169,6 +169,42 @@ export default function Workflow() {
               {q}
             </span>
           ))}
+        </div>
+
+        {/* "What I Annotate" reference table — static, scraper-friendly (D6) */}
+        <div className="mt-12 md:pl-[88px]">
+          <h3 className="eyebrow mb-4">What I Annotate</h3>
+          <div className="overflow-x-auto rounded-lg border border-[var(--border-dim)]">
+            <table className="w-full border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-[var(--border-dim)] bg-[var(--bg-glass)]">
+                  <th className="px-4 py-3 font-mono text-xs uppercase tracking-widest text-accent-glow">
+                    Game Category
+                  </th>
+                  <th className="px-4 py-3 font-mono text-xs uppercase tracking-widest text-accent-glow">
+                    Annotation Type
+                  </th>
+                  <th className="px-4 py-3 font-mono text-xs uppercase tracking-widest text-accent-glow">
+                    Signal to Recruiter
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {ANNOTATION_TABLE.map((row) => (
+                  <tr
+                    key={row.category}
+                    className="border-b border-[var(--border-dim)] last:border-0"
+                  >
+                    <td className="px-4 py-3 font-mono text-xs text-text-primary">
+                      {row.category}
+                    </td>
+                    <td className="px-4 py-3 text-text-data">{row.type}</td>
+                    <td className="px-4 py-3 text-text-data">{row.signal}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Section>

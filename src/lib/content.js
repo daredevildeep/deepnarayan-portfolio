@@ -149,6 +149,30 @@ export const QUALITY_COMMITMENTS = [
   'Instruction Adherence',
 ]
 
+// Part D6 — "What I Annotate" reference table (plain, scraper-friendly).
+export const ANNOTATION_TABLE = [
+  {
+    category: 'Open World (GTA V, GoT)',
+    type: 'Route & spatial mapping',
+    signal: 'Navigation data labeling',
+  },
+  {
+    category: 'Action RPG (Elden Ring, GoW)',
+    type: 'Combat state, NPC interaction',
+    signal: 'Frame-accurate event tagging',
+  },
+  {
+    category: 'Survival (Minecraft)',
+    type: 'Exploration, resource mapping',
+    signal: 'Environmental annotation',
+  },
+  {
+    category: 'FPS (Valorant)',
+    type: 'Action classification',
+    signal: 'High-frequency event labeling',
+  },
+]
+
 // Part 8, Phase 8 — sample work, available on request.
 // `src` stays undefined until a real clip is dropped in; the card then plays it.
 export const SAMPLES = [

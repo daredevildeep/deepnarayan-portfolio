@@ -78,7 +78,7 @@ export default function HeroText() {
       >
         <span className="h-2 w-2 rounded-full bg-accent-green animate-pulse-dot" />
         <span className="font-mono text-xs uppercase tracking-widest text-accent-green">
-          Available for Contract
+          Available from July 2026 — Immediately
         </span>
       </motion.div>
 

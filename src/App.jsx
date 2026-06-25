@@ -9,6 +9,7 @@ import SampleWork from './components/SampleWork/SampleWork'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import CustomCursor from './components/CustomCursor'
+import BackToTop from './components/BackToTop'
 
 export default function App() {
   // Smooth scroll for the whole document (disabled under reduced-motion).
@@ -35,6 +36,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <BackToTop />
     </>
   )
 }
