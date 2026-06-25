@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Mission Briefing — Design Tokens (Part 6.2)
+   ============================================================ */
+:root {
+  --bg-void: #050810; /* Almost black, slight blue tint */
+  --bg-panel: #0d1526; /* Panel/card backgrounds */
+  --bg-glass: rgba(13, 21, 38, 0.75); /* Glassmorphism panels */
+  --accent-core: #1d6fa4; /* Primary blue (matches resume) */
+  --accent-glow: #38bdf8; /* Neon cyan glow */
+  --accent-gold: #f59e0b; /* Gaming gold — used sparingly */
+  --accent-green: #10b981; /* Status/online indicators */
+  --text-primary: #e2e8f0; /* Near white */
+  --text-muted: #64748b; /* Secondary text */
+  --text-data: #94a3b8; /* Spec/data text */
+  --border-dim: rgba(56, 189, 248, 0.12); /* Subtle blue borders */
+  --border-glow: rgba(56, 189, 248, 0.35); /* Hover glow borders */
+  --scan-line: rgba(56, 189, 248, 0.025); /* Scanline overlay */
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  * {
+    @apply border-0;
+  }
+
+  html {
+    scroll-behavior: auto; /* Lenis owns scrolling */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Lenis recommended styles */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.3);
+    color: #fff;
+  }
+
+  /* Thin scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-core);
+    border-radius: 4px;
+  }
+}
+
+/* ============================================================
+   Reusable component classes
+   ============================================================ */
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-6 md:px-10;
+  }
+
+  .section-pad {
+    @apply py-[60px] md:py-[120px];
+  }
+
+  .glass-panel {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-dim);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .glow-border-hover {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+  .glow-border-hover:hover {
+    border-color: var(--border-glow);
+    box-shadow: 0 0 28px rgba(56, 189, 248, 0.18);
+  }
+
+  /* Section eyebrow — mission-briefing label */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.25em];
+    color: var(--accent-glow);
+  }
+
+  .section-title {
+    @apply font-display font-bold uppercase tracking-tightest;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    color: var(--text-primary);
+  }
+
+  .data-label {
+    @apply font-mono text-xs uppercase tracking-widest;
+    color: var(--text-muted);
+  }
+
+  .data-value {
+    @apply font-mono;
+    color: var(--text-data);
+  }
+}
+
+/* ============================================================
+   Global scanline + grid overlay (Part 6.1)
+   ============================================================ */
+.fx-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+/* Horizontal scanlines */
+.fx-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--scan-line) 0px,
+    var(--scan-line) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.6;
+}
+
+/* Subtle grid */
+.fx-grid {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(
+      var(--border-dim) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, var(--border-dim) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.5),
+    transparent 75%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.5),
+    transparent 75%
+  );
+}
+
+/* Vignette for depth */
+.fx-vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(2, 4, 9, 0.85) 100%
+  );
+}
+
+/* Crosshair custom cursor target (Phase 10) */
+.cursor-dot,
+.cursor-ring {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  border-radius: 9999px;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--accent-glow);
+}
+.cursor-ring {
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 1px solid var(--border-glow);
+  transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease,
+    border-color 0.2s ease;
+}
+.cursor-ring.is-active {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-color: var(--accent-gold);
+}
+
+/* Animated draw-in for SVG connector lines */
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+/* Utility: text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #e2e8f0 0%, #38bdf8 60%, #1d6fa4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ============================================================
+   Reduced motion (Part 6.5)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fx-overlay,
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
