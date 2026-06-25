@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
@@ -21,14 +21,38 @@ function CameraRig({ mouse }) {
   return null
 }
 
-export default function HeroScene() {
+/**
+ * With frameloop="demand" the scene only renders when a frame is requested.
+ * This driver requests frames every tick *while the hero is in view*, and
+ * stops entirely when it scrolls offscreen — so the GPU goes idle below the
+ * fold (A8). Under reduced motion it never drives, leaving a single static
+ * frame.
+ */
+function FrameDriver({ active }) {
+  const invalidate = useThree((s) => s.invalidate)
+  useEffect(() => {
+    if (!active) return
+    let id
+    const tick = () => {
+      invalidate()
+      id = requestAnimationFrame(tick)
+    }
+    id = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(id)
+  }, [active, invalidate])
+  return null
+}
+
+export default function HeroScene({ active = true }) {
   const mouse = useMouseParallax()
   const reduced = useRef(prefersReducedMotion()).current
 
   return (
     <Canvas
+      frameloop="demand"
       camera={{ position: [0, 0, 6], fov: 45 }}
-      dpr={[1, 1.8]}
+      dpr={[1, 1.5]}
+      performance={{ min: 0.5 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
       <ambientLight intensity={0.6} />
@@ -60,6 +84,8 @@ export default function HeroScene() {
       </Suspense>
 
       {!reduced && <CameraRig mouse={mouse} />}
+      {/* Drive frames only while visible (and motion is allowed). */}
+      <FrameDriver active={active && !reduced} />
     </Canvas>
   )
 }
