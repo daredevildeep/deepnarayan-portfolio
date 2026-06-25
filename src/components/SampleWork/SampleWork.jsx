@@ -1,9 +1,27 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, X, Clapperboard, Download, HardDriveDownload } from 'lucide-react'
-import { SAMPLES, PERSONAL } from '../../lib/content'
+import {
+  Play,
+  X,
+  Clapperboard,
+  Download,
+  HardDriveDownload,
+  Send,
+  Check,
+} from 'lucide-react'
+import { SAMPLES, RIG_STATUS, PERSONAL } from '../../lib/content'
 import { useReveal } from '../../hooks/useReveal'
 import Section from '../Section'
+
+/** Prefilled "request this sample" mailto link. */
+function requestHref(sample) {
+  const label = `${sample.game} ${sample.title}`
+  const subject = `Sample Request — ${label}`
+  const body = `Hi Deep, I'd like to see the sample recording for the ${label.toLowerCase()} task.`
+  return `mailto:${PERSONAL.email}?subject=${encodeURIComponent(
+    subject
+  )}&body=${encodeURIComponent(body)}`
+}
 
 function Lightbox({ sample, onClose }) {
   return (
@@ -36,16 +54,14 @@ function Lightbox({ sample, onClose }) {
             <div className="text-center">
               <Clapperboard size={40} className="mx-auto text-accent-glow/60" />
               <p className="mt-4 font-display text-lg font-bold tracking-tightest text-text-primary">
-                {sample.title}
+                {sample.game} — {sample.title}
               </p>
               <p className="mt-2 max-w-sm px-6 text-sm text-text-muted">
                 Full recording available on request via Google Drive. Reach out
                 and I'll share the {sample.spec} capture.
               </p>
               <a
-                href={`mailto:${PERSONAL.email}?subject=Sample request: ${encodeURIComponent(
-                  sample.title
-                )}`}
+                href={requestHref(sample)}
                 className="mt-5 inline-flex items-center gap-2 rounded border border-[var(--border-glow)] px-4 py-2 font-mono text-xs uppercase tracking-widest text-accent-glow hover:bg-accent-glow/10"
               >
                 Request Recording
@@ -60,21 +76,25 @@ function Lightbox({ sample, onClose }) {
 
 function SampleCard({ sample, onPlay }) {
   return (
-    <button
+    <div
       data-reveal
-      data-cursor="hover"
-      onClick={onPlay}
-      className="glass-panel glow-border-hover group block overflow-hidden rounded-xl text-left"
+      className="glass-panel glow-border-hover group flex flex-col overflow-hidden rounded-xl"
     >
-      {/* Thumbnail */}
-      <div className="relative grid aspect-video place-items-center overflow-hidden bg-gradient-to-br from-panel to-void">
+      {/* Thumbnail — click to preview / request info */}
+      <button
+        type="button"
+        onClick={onPlay}
+        data-cursor="hover"
+        aria-label={`Preview ${sample.game} ${sample.title}`}
+        className="relative grid aspect-video place-items-center overflow-hidden bg-gradient-to-br from-panel to-void"
+      >
         {/* faux scanline shimmer */}
         <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(56,189,248,0.05)_0,rgba(56,189,248,0.05)_1px,transparent_1px,transparent_4px)]" />
         <Clapperboard size={34} className="text-text-muted transition-colors group-hover:text-accent-glow" />
 
         {/* duration badge */}
         <span className="absolute bottom-3 right-3 rounded bg-void/80 px-2 py-1 font-mono text-[10px] text-text-data">
-          {sample.duration}
+          {sample.duration} · {sample.spec}
         </span>
 
         {/* play overlay */}
@@ -83,22 +103,73 @@ function SampleCard({ sample, onPlay }) {
             <Play size={20} className="ml-0.5" />
           </span>
         </span>
-      </div>
+      </button>
 
       {/* Meta */}
-      <div className="p-5">
+      <div className="flex flex-1 flex-col p-5">
         <span className="eyebrow">{sample.id}</span>
         <h3 className="mt-2 font-display text-lg font-bold tracking-tightest text-text-primary">
-          {sample.title}
+          {sample.game} — {sample.title}
         </h3>
         <div className="mt-3 flex flex-wrap items-center gap-2 font-mono text-[11px] text-text-muted">
           <span className="rounded border border-[var(--border-dim)] px-2 py-0.5 text-accent-glow/80">
             {sample.task}
           </span>
-          <span>{sample.spec}</span>
+          <span>{sample.duration} / {sample.spec}</span>
         </div>
+
+        {/* Availability status */}
+        <div className="mt-3 flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-accent-green animate-pulse-dot" />
+          <span className="font-mono text-[10px] uppercase tracking-widest text-accent-green">
+            Available on request
+          </span>
+        </div>
+
+        {/* Request CTA */}
+        <a
+          href={requestHref(sample)}
+          data-cursor="hover"
+          className="mt-5 inline-flex items-center justify-center gap-2 rounded border border-[var(--border-glow)] px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-accent-glow transition-colors hover:bg-accent-glow/10"
+        >
+          <Send size={13} />
+          Request This Sample
+        </a>
       </div>
-    </button>
+    </div>
+  )
+}
+
+/** HUD-style readiness panel above the sample grid (Part C2). */
+function RigStatus() {
+  return (
+    <div className="glass-panel mb-8 rounded-xl border border-[var(--border-dim)] bg-void/60 p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="font-display text-sm font-bold uppercase tracking-tightest text-text-primary">
+            Capture Rig — Ready
+          </span>
+        </div>
+        <span className="inline-flex items-center gap-2 rounded-full border border-accent-green/30 bg-accent-green/5 px-3 py-1">
+          <span className="h-2 w-2 rounded-full bg-accent-green animate-pulse-dot" />
+          <span className="font-mono text-[10px] uppercase tracking-widest text-accent-green">
+            Online
+          </span>
+        </span>
+      </div>
+
+      <ul className="mt-5 grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
+        {RIG_STATUS.map((item) => (
+          <li
+            key={item}
+            className="flex items-center gap-2.5 font-mono text-xs text-accent-glow"
+          >
+            <Check size={14} className="shrink-0 text-accent-green" />
+            <span className="text-text-data">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -114,11 +185,13 @@ export default function SampleWork() {
       eyebrow="Sample Work"
       title="Capture Reels"
     >
-      <p className="mb-10 max-w-2xl text-text-data">
-        Representative session types. Live placeholders today — real recordings
-        attach here as they're produced. Each ships at 1080p / 60fps with session
-        notes.
+      <p className="mb-8 max-w-2xl text-text-data">
+        Representative session types, available on request. Real recordings
+        attach here as they're produced — each ships at 1080p / 60fps with
+        session notes.
       </p>
+
+      <RigStatus />
 
       <div ref={ref} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {SAMPLES.map((s) => (
@@ -129,7 +202,8 @@ export default function SampleWork() {
       <div className="mt-10 flex flex-wrap items-center gap-4">
         <p className="flex items-center gap-2 text-sm text-text-muted">
           <HardDriveDownload size={16} className="text-accent-glow" />
-          Full recordings available on request via Google Drive.
+          Full session recordings delivered via Google Drive within 24 hours of
+          task receipt.
         </p>
         <a
           href={PERSONAL.resume}

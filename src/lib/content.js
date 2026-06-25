@@ -149,29 +149,42 @@ export const QUALITY_COMMITMENTS = [
   'Instruction Adherence',
 ]
 
-// Part 8, Phase 8 — sample work placeholders.
+// Part 8, Phase 8 — sample work, available on request.
+// `src` stays undefined until a real clip is dropped in; the card then plays it.
 export const SAMPLES = [
   {
     id: 'Sample 01',
-    title: 'Minecraft Cave Exploration',
-    duration: '18m 42s',
-    spec: '1080p / 60fps',
+    game: 'Minecraft',
+    title: 'Cave Exploration',
     task: 'Spatial Mapping',
+    duration: '~18 min',
+    spec: '1080p / 60fps',
   },
   {
     id: 'Sample 02',
+    game: 'GTA V',
     title: 'Open World Navigation',
-    duration: '24m 10s',
-    spec: '1080p / 60fps',
     task: 'Route Annotation',
+    duration: '~24 min',
+    spec: '1080p / 60fps',
   },
   {
     id: 'Sample 03',
-    title: 'Structured Interaction Task',
-    duration: '15m 00s',
+    game: 'Valorant',
+    title: 'Match Gameplay',
+    task: 'Action State Labeling',
+    duration: '~15 min',
     spec: '1080p / 60fps',
-    task: 'Event Labeling',
   },
+]
+
+// Part C — capture-rig readiness checklist (HUD status panel).
+export const RIG_STATUS = [
+  'OBS Studio installed and configured',
+  'NVIDIA ShadowPlay active (RTX 5060)',
+  '1080p @ 60fps confirmed',
+  '150Mbps upload verified',
+  'Available to record immediately',
 ]
 
 // Nav sections (Part 8, Phase 2).
